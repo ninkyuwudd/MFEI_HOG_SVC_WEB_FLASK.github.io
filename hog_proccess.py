@@ -1,5 +1,6 @@
 from skimage.feature import hog
-
+import pandas as pd
+import numpy as np
 def divide_into_cells(image):
     cells = []
     cells.append(image[0:image.shape[0]//2, 0:image.shape[1]//2])  # Cell 1
@@ -38,5 +39,15 @@ def compute_hog(image):
         print(hog_descriptor)
         hog_descriptors.append(hog_descriptor)
         hog_images.append(hog_image)
+    faltten_hog = np.array(hog_descriptors).flatten()
+    # data_item = [hog_descriptor, f"{idx}"]
+    df = pd.DataFrame([faltten_hog], columns=[f'feature_{i}' for i in range(len(faltten_hog))])
+
+    
+    # Menyimpan DataFrame ke file CSV
+    df.to_csv("testing_data.csv", index=False)
   
     return hog_descriptors
+
+
+

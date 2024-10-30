@@ -3,7 +3,7 @@ import cv2
 import os
 
 
-def create_video_from_frames(frame_folder, output_video_path, fps=25):
+def create_video_from_frames(frame_folder, output_video_path, fps=57):
     # Dapatkan daftar file frame dan urutkan
     frames = [f for f in os.listdir(frame_folder) if f.endswith('.png') or f.endswith('.jpg')]
     frames.sort()
@@ -76,9 +76,26 @@ def check_input_video(request,app):
             dataVideo.save(file_path)
             result = extract_frames_from_video(file_path, "output_frame")
             return f'File  {file_path} and {result}'
-
+        
+def insert_input_to_folder(request):
+    files = request.files.getlist("files[]")
+    upload_folder = "uploads"  # folder tujuan di server
+    full_path = ""
+    for file in files:
+            # Dapatkan path relatif dari file (misal: '0200/056.png')
+            relative_path = file.filename
+            # Buat path lengkap (misal: 'uploads/0200/056.png')
+            full_path = os.path.join(upload_folder, relative_path)
+        
+            # Membuat subfolder jika belum ada
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+            
+            # Simpan file
+            file.save(full_path)
+    directory = os.path.dirname(full_path)
+    return directory
 # Contoh penggunaan
-frame_folder = 'E:/kuliah/skripsi/datavideo/casia/fn/fn00/0000'  # Ganti dengan path ke folder frame Anda
-output_video_path = 'output_video.mp4'
+# frame_folder = 'E:/kuliah/skripsi/datavideo/casia/fn/fn02/0200'  # Ganti dengan path ke folder frame Anda
+# output_video_path = 'output_video.mp4'
 # create_video_from_frames(frame_folder, output_video_path)
 
