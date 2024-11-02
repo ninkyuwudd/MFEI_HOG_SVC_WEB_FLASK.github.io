@@ -88,4 +88,4 @@ def compute_svc():
     # score_f1_avg = f1_score(y_test, y_pred, average="micro")
     # print(f'Akurasi: {accuracy * 100:.2f}%')
     # print(f"F1 Score: {score_f1_avg},{score_f1}")
-    return jsonify({"message": f"predicted {y_pred[0]}"})
+    return f"predicted {y_pred[0]}"

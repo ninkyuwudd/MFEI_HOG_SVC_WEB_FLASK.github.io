@@ -16,6 +16,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def index():
     # check_input_video(request,app)
 
+    result = ""
     full_path = insert_input_to_folder(request)
 
     
@@ -30,7 +31,9 @@ def index():
 
         compute_hog(mfei_image)
 
-        compute_svc()
+        result = compute_svc()
+
+        return jsonify({"message": result})
         
 
     res = multiplyNumb(1,2)

@@ -8,7 +8,6 @@ def multiplyNumb(numbA,numbB):
     return numbC
 
 
-
 def load_images_from_folder(folder_path):
     images = []
     for filename in os.listdir(folder_path):#[1]
